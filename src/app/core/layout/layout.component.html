@@ -1,0 +1,45 @@
+<div class="d-flex min-vh-100">
+  <div class="main-container d-flex flex-column flex-grow-1">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand">
+          <i class="bi bi-house-heart-fill"></i>
+          Canina
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarText"
+          aria-controls="navbarText"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            @for (item of menuItems; track item.path) {
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                [routerLink]="item.path"
+                routerLinkActive="active"
+              >
+                {{ item.title }}
+              </a>
+            </li>
+            }
+          </ul>
+          <span class="navbar-text">
+            <button class="btn btn-outline-secondary ms-auto">Logout</button>
+          </span>
+        </div>
+      </div>
+    </nav>
+
+    <main class="main px-4 flex-grow-1">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

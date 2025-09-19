@@ -1,0 +1,64 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card p-4" style="width: 25rem;">
+    <div class="card-body">
+      <h2 class="card-title text-center mb-2">¡Bienvenido!</h2>
+      <p class="text-center text-muted mb-4">Ingresa tus credenciales para continuar.</p>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="username" class="form-label">Nombre de Usuario</label>
+          <input
+            type="text"
+            class="form-control"
+            [ngClass]="{'is-invalid': username?.invalid && (username?.dirty || username?.touched)}"
+            id="username"
+            formControlName="username"
+            aria-describedby="usernameHelp">
+
+          @if (username?.invalid && (username?.dirty || username?.touched)) {
+            <div class="invalid-feedback d-block">
+              @if (username?.errors?.['required']) {
+                <div>El username es obligatorio.</div>
+              }
+              @if (username?.errors?.['username']) {
+                <div>El formato del correo no es válido.</div>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Contraseña</label>
+          <input
+            type="password"
+            class="form-control"
+            [ngClass]="{'is-invalid': password?.invalid && (password?.dirty || password?.touched)}"
+            id="password"
+            formControlName="password">
+
+          @if (password?.invalid && (password?.dirty || password?.touched)) {
+            <div class="invalid-feedback d-block">
+              @if (password?.errors?.['required']) {
+                <div>La contraseña es obligatoria.</div>
+              }
+              @if (password?.errors?.['minlength']) {
+                <div>La contraseña debe tener al menos 6 caracteres.</div>
+              }
+            </div>
+          }
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary w-100"
+          [disabled]="loginForm.invalid">
+          Iniciar Sesión
+        </button>
+      </form>
+
+      <!-- <div class="text-center mt-3">
+        <a href="#" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
+      </div> -->
+    </div>
+  </div>
+</div>

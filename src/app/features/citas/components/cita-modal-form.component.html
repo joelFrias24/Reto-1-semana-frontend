@@ -1,0 +1,114 @@
+<div
+  class="modal fade"
+  id="citaModal"
+  tabindex="-1"
+  aria-labelledby="citaModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="citaModalLabel">
+        {{ isEditMode() ? "Modificar Cita" : "Añadir Cita" }}
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="closeModal()"
+        ></button>
+      </div>
+
+      <form [formGroup]="citaForm" (ngSubmit)="onSubmit()">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="fecha_hora_inicio" class="form-label">
+              Fecha de Inicio
+            </label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              id="fecha_hora_inicio"
+              formControlName="fecha_hora_inicio"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="fecha_hora_fin" class="form-label">
+              Fecha de Finalización
+            </label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              id="fecha_hora_fin"
+              formControlName="fecha_hora_fin"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="mascota_id" class="form-label">
+              Mascota
+            </label>
+            <select
+              class="form-select"
+              id="mascota_id"
+              formControlName="mascota_id"
+            >
+              <option [ngValue]="''" disabled>Selecciona una mascota</option>
+              <option *ngFor="let mascota of mascotas()" [ngValue]="mascota.id">
+                {{ mascota.nombre }}
+              </option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="servicio_id" class="form-label">
+              Servicio
+            </label>
+            <select
+              class="form-select"
+              id="servicio_id"
+              formControlName="servicio_id"
+            >
+              <option [ngValue]="''" disabled>Selecciona un servicio</option>
+              <option *ngFor="let servicio of servicios()" [ngValue]="servicio.id">
+                {{ servicio.nombre }}
+              </option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="profesional_id" class="form-label">
+              Servicio
+            </label>
+            <select
+              class="form-select"
+              id="profesional_id"
+              formControlName="profesional_id"
+            >
+              <option [ngValue]="''" disabled>Selecciona un profesional</option>
+              <option *ngFor="let profesional of profesionales()" [ngValue]="profesional.id">
+                {{ profesional.nombre_completo }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            (click)="closeModal()"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="citaForm.invalid"
+            data-bs-dismiss="modal"
+          >
+            {{ isEditMode() ? "Guardar Cambios" : "Añadir Cita" }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

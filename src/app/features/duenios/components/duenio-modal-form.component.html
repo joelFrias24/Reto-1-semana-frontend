@@ -1,0 +1,95 @@
+<div
+  class="modal fade"
+  id="duenioModal"
+  tabindex="-1"
+  aria-labelledby="duenioModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="duenioModalLabel">
+          {{ isEditMode() ? "Modificar Dueño" : "Añadir Dueño" }}
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="closeModal()"
+        ></button>
+      </div>
+      <form [formGroup]="duenioForm" (ngSubmit)="onSubmit()">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="nombre_completo" class="form-label"
+              >Nombre Completo</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="nombre_completo"
+              formControlName="nombre_completo"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="num_identificacion" class="form-label"
+              >Número de Identificación</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="num_identificacion"
+              formControlName="num_identificacion"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input
+              type="text"
+              class="form-control"
+              id="direccion"
+              formControlName="direccion"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input
+              type="text"
+              class="form-control"
+              id="telefono"
+              formControlName="telefono"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="correo" class="form-label">Correo Electrónico</label>
+            <input
+              type="email"
+              class="form-control"
+              id="correo"
+              formControlName="correo"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            (click)="closeModal()"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="duenioForm.invalid"
+            data-bs-dismiss="modal"
+          >
+            {{ isEditMode() ? "Guardar Cambios" : "Añadir Dueño" }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

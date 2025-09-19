@@ -1,0 +1,150 @@
+<div
+  class="modal fade"
+  id="mascotaModal"
+  tabindex="-1"
+  aria-labelledby="mascotaModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="mascotaModalLabel">
+          {{ isEditMode() ? "Modificar Mascota" : "Añadir Mascota" }}
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="closeModal()"
+        ></button>
+      </div>
+      <form [formGroup]="mascotaForm" (ngSubmit)="onSubmit()">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="nombre" class="form-label">
+              Nombre
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="nombre"
+              formControlName="nombre"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="especie" class="form-label">
+              Especie
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="especie"
+              formControlName="especie"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="raza" class="form-label">
+              Raza
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="raza"
+              formControlName="raza"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="fecha_nacimiento" class="form-label">
+              Fecha Nacimiento
+            </label>
+            <input
+              type="text"
+              placeholder="YYYY-MM-DD"
+              class="form-control"
+              id="fecha_nacimiento"
+              formControlName="fecha_nacimiento"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="sexo" class="form-label">
+              Sexo
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="sexo"
+              formControlName="sexo"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="color" class="form-label">
+              Color
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="color"
+              formControlName="color"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="peso" class="form-label">
+              Peso
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="peso"
+              formControlName="peso"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="notas" class="form-label">
+              Notas
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="notas"
+              formControlName="notas"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="duenio_id" class="form-label">
+              Dueño
+            </label>
+            <select
+              class="form-select"
+              id="duenio_id"
+              formControlName="duenio_id"
+            >
+              <option [ngValue]="''" disabled>Selecciona un dueño</option>
+              <option *ngFor="let duenio of duenios()" [ngValue]="duenio.id">
+                {{ duenio.nombre_completo }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            (click)="closeModal()"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="mascotaForm.invalid"
+            data-bs-dismiss="modal"
+          >
+            {{ isEditMode() ? "Guardar Cambios" : "Añadir Mascota" }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

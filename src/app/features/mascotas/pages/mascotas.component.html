@@ -1,0 +1,144 @@
+<div class="container mt-4">
+
+  <!-- Header action buttons + search -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Listado de Mascotas</h2>
+    <div class="d-flex align-items-center">
+      <input
+        type="text"
+        class="form-control me-2"
+        [(ngModel)]="searchQuery"
+        placeholder="Buscar por nombre o dueño..."
+        (keyup.enter)="onSearch()"
+      />
+      <button
+        class="btn btn-primary me-2"
+        (click)="onSearch()"
+      >
+        Buscar
+      </button>
+      <button
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#mascotaModal"
+        (click)="onNewClick()"
+      >
+        <i class="bi bi-plus"></i>
+      </button>
+    </div>
+  </div><!-- / Header action buttons + search -->
+
+  <!-- Loading block -->
+  <div *ngIf="isLoading()">
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+    </div>
+  </div><!-- / Loading block -->
+
+  <div *ngIf="!isLoading()">
+    <div *ngIf="hasMascotasItems(); else noData">
+
+      <!-- Table -->
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Especie</th>
+              <th scope="col">Raza</th>
+              <th scope="col">Fecha de Nacimiento</th>
+              <th scope="col">Sexo</th>
+              <th scope="col">Color</th>
+              <th scope="col">Peso (kg)</th>
+              <th scope="col">Notas</th>
+              <th scope="col">Dueño</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let mascota of mascotas()?.items">
+              <td>{{ mascota.nombre }}</td>
+              <td>{{ mascota.especie }}</td>
+              <td>{{ mascota.raza }}</td>
+              <td>{{ mascota.fecha_nacimiento | date:'shortDate' }}</td>
+              <td>{{ mascota.sexo }}</td>
+              <td>{{ mascota.color }}</td>
+              <td>{{ mascota.peso }}</td>
+              <td>{{ mascota.notas }}</td>
+              <td>{{ mascota.duenio }}</td>
+              <td>
+                <button
+                  class="btn btn-outline-secondary btn-sm"
+                  data-bs-toggle="modal"
+                  data-bs-target="#mascotaModal"
+                  (click)="onEditClick(mascota)"
+                >
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div><!-- / Table -->
+
+      <!-- Pagination -->
+      <nav aria-label="Navegación de paginación" class="mt-4">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [class.disabled]="currentPage() === 1">
+            <a class="page-link" (click)="onPageChange(1)">
+              &laquo; Primera
+            </a>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage() === 1">
+            <a class="page-link" (click)="onPageChange(currentPage() - 1)">
+              Anterior
+            </a>
+          </li>
+          <li
+            class="page-item"
+            *ngFor="let page of getPages()"
+            [class.active]="page === currentPage()"
+          >
+            <a class="page-link" (click)="onPageChange(page)">{{ page }}</a>
+          </li>
+          <li
+            class="page-item"
+            [class.disabled]="currentPage() === mascotas()?.totalPages"
+          >
+            <a class="page-link" (click)="onPageChange(currentPage() + 1)">
+              Siguiente
+            </a>
+          </li>
+          <li
+            class="page-item"
+            [class.disabled]="currentPage() === mascotas()?.totalPages"
+          >
+            <a class="page-link" (click)="onPageChange(mascotas()?.totalPages)">
+              Última &raquo;
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="text-center mt-3">
+        <span class="text-muted">
+          Mostrando {{ hasMascotasItems() }} de {{ mascotas()?.totalCount }} registros.
+          Página {{ currentPage() }} de {{ mascotas()?.totalPages }}
+        </span>
+      </div><!-- / Pagination -->
+    </div>
+
+    <!-- No data block -->
+    <ng-template #noData>
+      <div class="alert alert-info text-center" role="alert">
+        No se encontraron mascotas.
+      </div>
+    </ng-template><!-- / No data block -->
+  </div>
+</div>
+<app-mascota-modal-form
+  [mascota]="selectedPet()"
+  (formSubmit)="onFormSubmit($event)"
+  (modalClose)="onModalClose()"
+/>
